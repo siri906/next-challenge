@@ -11,11 +11,11 @@ export default function SignIn() {
   return (
     <div className="max-w-96 w-full h-screen flex items-center mx-auto">
       <form action={dispatch} className="flex flex-col gap-3 w-full">
-        <Input name="email" type="email" placeholder="Email" required />
-        <Input name="username" type="text" placeholder="username" />
+        <Input name="email" type="email" placeholder="Email" errors={state?.fieldErrors.email} />
+        <Input name="username" type="text" placeholder="username" errors={state?.fieldErrors.username} />
         <Input name="password" type="password" placeholder="password" errors={state?.fieldErrors.password} required />
         <Button text="LogIn" />
-        {state?.fieldErrors.password === undefined ? <div className="bg-emerald-500 p-4 rounded-lg">Welcome back!</div> : null}
+        {state === undefined ? <div className="bg-emerald-500 p-4 rounded-lg">Welcome back!</div> : null}
       </form>
     </div>
   );

@@ -1,14 +1,17 @@
 "use server";
 import z from "zod";
 
-const formSchema = z
-  .object({
-    email: z.string(),
-    username: z.string(),
-    password: z.string(),
-  })
-  // 앞에가 성공 조건, 뒤에는 앞 조건이 안 맞을 경우
-  .refine(({ password }) => password === "12345", { message: "Wrong Password", path: ["password"] });
+const passRegex = /\d/;
+const formSchema = z.object({
+  email: z
+    .string()
+    .email()
+    .refine((email) => email.endsWith("@zod.com"), {
+      message: "이메일 주소는 '@zod.com'으로 끝나야 합니다.",
+    }),
+  username: z.string().min(5),
+  password: z.string().regex(passRegex, "숫자가 하나라도 있어야됨").min(10),
+});
 
 export const loginFn = async (prevState: any, action: FormData) => {
   await new Promise((resolve) => setTimeout(resolve, 2000));
